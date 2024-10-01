@@ -1,0 +1,6 @@
+# Ignorer les dossiers spécifiques
+/node_modules
+/dist
+
+# Ignorer les fichiers de configuration spécifiques à l'environnement
+*.env
