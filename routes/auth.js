@@ -13,13 +13,13 @@ router.post('/authenticate', async (req, res) => {
   console.log(token);
 
   
-  /*if (token!=="notFound" || token!== null) {
+  if (token!=="notFound" && token!== undefined) {
     console.log("lazzzz");
     verifyToken(token); 
     console.log("ici");
     return res.status(200).json({ message: 'Token valid' });
   }
-  else{ */
+  else{ 
     console.log("didid");
   if(!email){
     return res.status(400).json({ message: '"email" is required' });
@@ -50,7 +50,7 @@ router.post('/authenticate', async (req, res) => {
     name: user.name,
     email: user.email,
     photo: user.photo });
-//}
+}
 });
 
 

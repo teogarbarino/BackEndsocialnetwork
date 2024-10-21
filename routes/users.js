@@ -41,7 +41,7 @@ router.post('/register', [
       id: user.id,
       name: user.name,
       email: user.email,
-      photo: user.photo
+      photo: user.photo,
     });
   } catch (err) {
     console.error(err.message);

@@ -89,4 +89,16 @@ router.post('/posts/:id/messages', [
   }
 });
 
+router.get('/posts', async (req, res) => {
+  try {
+    const posts = await Post.find(); // Récupère tous les posts de la base de données
+    res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+
+
 module.exports = router;

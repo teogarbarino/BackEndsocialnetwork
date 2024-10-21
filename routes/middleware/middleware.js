@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 
 // Middleware pour vérifier le token JWT et son rôle ID
 function verifyTokenAndRole(token) {
-    console.log("dedede")
     return (req, res, next) => {
         // Récupérer le token JWT de l'en-tête Authorization
         const authHeader = req.headers['authorization'];
