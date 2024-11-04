@@ -3,6 +3,7 @@ const connectDB = require('./db.js');
 const postRouter = require('./routes/posts');
 const http = require('http');
 const socketio = require('socket.io');
+const setupSocket = require('./socketHandler');
 
 require('dotenv').config(); 
 connectDB();
@@ -36,34 +37,7 @@ app.use('/api', authRouter);
 app.use('/api',postRouter);
 app.use('/api', conversationRouter);
 
-io.on('connection', (socket) => {
-  console.log('New WebSocket connection');
-
-  // Join a conversation
-  socket.on('joinRoom', ({ userId, conversationId }) => {
-    socket.join(conversationId);
-    console.log(`${userId} joined room: ${conversationId}`);
-  });
-
-  // Receive message
-  socket.on('sendMessage', ({ conversationId, message }) => {
-    io.to(conversationId).emit('message', message);
-  });
-
-  // Disconnect user
-  socket.on('disconnect', () => {
-    console.log('User had left');
-  });
-  socket.on('video data', ({ conversationId, data }) => {
-    // Broadcast video data to others in the room
-    socket.to(conversationId).emit('video data', data);
-  });
-
-  // Disconnect user
-  socket.on('disconnect', () => {
-    console.log('User had left');
-  });
-});
+setupSocket(io);
 
 app.listen(PORT, () => { 
     console.log(`Serveur démarré sur le port ${PORT}`); 
