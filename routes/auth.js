@@ -16,10 +16,12 @@ router.post('/authenticate', async (req, res) => {
   if (token!=="notFound" && token!== undefined) {
 
     verifyToken(token); 
+    console.log("ou alors ici ")
    
     return res.status(200).json({ message: 'Token valid' });
   }
   else{ 
+    console.log("ou alors iddddddddddci ")
   if(!email){
     return res.status(400).json({ message: '"email" is required' });
   }

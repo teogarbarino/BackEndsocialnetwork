@@ -2,12 +2,13 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/users');
 
 module.exports = async function(req, res, next) {
- 
+  console.log("dededede");
+  console.log(req);
   if(!req.headers.authorization){
     return res.status(401).json({ message: 'Unauthorized' });
   }
   const token = req.headers.authorization.split(' ')[1];;
-//   console.log(req);
+   console.log(req);
 
   // Check if the token exists
   if (!token) {

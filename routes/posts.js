@@ -1,23 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
+const User = require('../models/users');
 const { check, validationResult } = require('express-validator');
 const Post = require('../models/posts');
 
 // Route POST pour créer un nouveau post
-router.post('/posts', [
+router.post('/post', [
   auth,
-  [
-    check('title', 'Title is required').not().isEmpty(),
-    check('description', 'Description is required').not().isEmpty()
-  ]
-], async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ message: 'Invalid inputs', errors: errors.array() });
-  }
+  
+],async (req, res) => {
+  
+  console.log("je passe ici ");
 
   const { title, description, image, lat, lon } = req.body;
+  console.log("je passe ici ");
 
   try {
     // Construire l'objet position s'il est fourni
@@ -28,12 +25,16 @@ router.post('/posts', [
         lon: parseFloat(lon)
       };
     }
+    //
+    const author = await User.findById(req.user.id);
+
+    console.log("didididid: "+author);
 
     // Créer le post avec ou sans la position et l'image
     const post = new Post({
       title,
       description,
-      author: req.user.id,
+      author: author.id,
       position: position,
       image: image // Accepter l'image Base64 directement
     });
@@ -89,9 +90,11 @@ router.post('/posts/:id/messages', [
   }
 });
 
-router.get('/posts', async (req, res) => {
+router.get('/posts/', async (req, res) => {
   try {
-    const posts = await Post.find(); // Récupère tous les posts de la base de données
+    const posts = await Post.find().populate('author', 'name photo'); // Récupère tous les posts de la base de données
+  
+    
     res.json(posts);
   } catch (err) {
     console.error(err.message);

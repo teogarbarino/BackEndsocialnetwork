@@ -37,7 +37,7 @@ app.use('/api', authRouter);
 app.use('/api',postRouter);
 app.use('/api', conversationRouter);
 
-setupSocket(io);
+//setupSocket(io);
 
 app.listen(PORT, () => { 
     console.log(`Serveur démarré sur le port ${PORT}`); 
